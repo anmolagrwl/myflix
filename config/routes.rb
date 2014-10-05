@@ -3,7 +3,7 @@ Myflix::Application.routes.draw do
 
   get 'ui(/:action)', controller: 'ui'
 
-  get 'register', to: 'users#new'
+  # get 'register', to: 'users#new'
 
   resources :users
 
