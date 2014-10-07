@@ -1,5 +1,6 @@
 class VideosController < ApplicationController
   before_action :set_video, only: [:show]
+  before_action :require_user
   
   def index
     @categories = Category.all
@@ -17,9 +18,4 @@ class VideosController < ApplicationController
   def set_video
     @video = Video.find(params[:id])
   end
-
-  # def video_params
-  #   params.require(:video).permit()
-  # end
-
 end
