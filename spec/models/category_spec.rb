@@ -14,9 +14,9 @@ describe Category do
     it "returns an array of one video if there is only one in the category" do
       comedy = Category.create(name: 'Comedy')
       
-      1.times {Video.create(title: "foo", description: "bar")}
+      Video.create(title: "foo", description: "bar")
       
-      Video.all.each do | video |
+      Video.find_each do | video |
         VideoCategory.create(video_id: video.id, category_id: 1)
       end
 
