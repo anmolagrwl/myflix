@@ -16,6 +16,6 @@ class VideosController < ApplicationController
   private
 
   def set_video
-		@video = Video.find(params[:id])
+    @video = Video.find(params[:id])
   end
 end
