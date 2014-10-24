@@ -5,6 +5,8 @@ class QueueItem < ActiveRecord::Base
   delegate :categories, to: :video
   delegate :title, to: :video, prefix: :video
 
+  validates_numericality_of :position, {only_integer: true}
+
   def video_category
     if categories.any?
       categories.map(&:name).join(", ") 
@@ -17,4 +19,5 @@ class QueueItem < ActiveRecord::Base
     review = Review.where(user_id: user.id, video_id: video.id).first
     review.rating if review
   end
+
 end

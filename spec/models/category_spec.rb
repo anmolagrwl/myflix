@@ -17,7 +17,7 @@ describe Category do
       Video.create(title: "foo", description: "bar")
       
       Video.find_each do | video |
-        VideoCategory.create(video_id: video.id, category_id: 1)
+        VideoCategory.create(video_id: video.id, category_id: comedy.id)
       end
 
       expect(comedy.recent_videos.count).to eq(1)
@@ -30,7 +30,7 @@ describe Category do
       2.times {Video.create(title: "foo", description: "bar")}
       
       Video.all.each do | video |
-        VideoCategory.create(video_id: video.id, category_id: 1)
+        VideoCategory.create(video_id: video.id, category_id: comedy.id)
       end
 
       expect(comedy.recent_videos.count).to eq(2)
@@ -47,13 +47,13 @@ describe Category do
       monk = Video.create(title: 'Monk', description: 'Adrian Monk is a brilliant San Francisco detective, whose obsessive compulsive disorder just happens to get in the way.', small_cover_url: '/tmp/monk.jpg', large_cover_url: '/tmp/monk.jpg', created_at: 4.days.ago)
       family_guy = Video.create(title: 'Family Guy', description: 'In a wacky Rhode Island town, a dysfunctional family strive to cope with everyday life as they are thrown from one crazy scenario to another.', small_cover_url: '/tmp/family_guy.jpg', large_cover_url: '/tmp/family_guy.jpg', created_at: 2.days.ago)
       
-      VideoCategory.create(video_id: 1, category_id: 1)
-      VideoCategory.create(video_id: 2, category_id: 1)
-      VideoCategory.create(video_id: 3, category_id: 1)
-      VideoCategory.create(video_id: 4, category_id: 1)
-      VideoCategory.create(video_id: 5, category_id: 1)
-      VideoCategory.create(video_id: 6, category_id: 1)
-      
+      VideoCategory.create(video_id: happy_gilmore.id, category_id: comedy.id)
+      VideoCategory.create(video_id: futurama.id, category_id: comedy.id)
+      VideoCategory.create(video_id: simpsons.id, category_id: comedy.id)
+      VideoCategory.create(video_id: psych.id, category_id: comedy.id)
+      VideoCategory.create(video_id: monk.id, category_id: comedy.id)
+      VideoCategory.create(video_id: family_guy.id, category_id: comedy.id)
+
       expect(comedy.recent_videos).to eq([simpsons, family_guy, happy_gilmore, futurama, monk, psych])
     end
 
@@ -61,9 +61,9 @@ describe Category do
       comedy = Category.create(name: 'Comedy')
       
       7.times {Video.create(title: "foo", description: "bar")}
-      
+
       Video.all.each do | video |
-        VideoCategory.create(video_id: video.id, category_id: 1)
+        VideoCategory.create(video_id: video.id, category_id: comedy.id)
       end
 
       expect(comedy.recent_videos.count).to eq(6)

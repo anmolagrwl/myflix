@@ -3,6 +3,8 @@ require 'spec_helper'
 describe QueueItem do
   it { should belong_to(:user) }
   it { should belong_to(:video) }
+  it { should validate_numericality_of(:position) }
+
   describe "#video_title" do
     it "returns the title of the associated video" do
       video = Fabricate(:video)
