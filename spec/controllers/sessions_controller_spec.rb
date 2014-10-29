@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SessionsController do
   describe "GET new" do
     it "redirects to root for logged in user" do
-      session[:user_id] = Fabricate(:user).id
+      set_current_user
       get :new
       expect(response).to redirect_to home_path
     end
