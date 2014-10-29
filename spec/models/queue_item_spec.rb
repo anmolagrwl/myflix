@@ -60,7 +60,7 @@ describe QueueItem do
       review = Fabricate(:review, user: user, video: video, rating: 2)
       queue_item = Fabricate(:queue_item, user: user, video: video)
       queue_item.rating = 4
-      expect(Review.first.rating).to eq(4)
+      expect(review.reload.rating).to eq(4)
     end
     it "clears the rating of an existing review" do
       video = Fabricate(:video)
@@ -68,7 +68,7 @@ describe QueueItem do
       review = Fabricate(:review, user: user, video: video, rating: 2)
       queue_item = Fabricate(:queue_item, user: user, video: video)
       queue_item.rating = nil
-      expect(Review.first.rating).to be_nil
+      expect(review.reload.rating).to be_nil
     end
     it "creates a review with the rating if no review exists" do
       video = Fabricate(:video)
