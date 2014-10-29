@@ -10,6 +10,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap_form'
+gem 'pg'
 
 group :development do
   gem 'sqlite3'
@@ -32,7 +33,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 

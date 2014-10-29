@@ -7,6 +7,6 @@ class Video < ActiveRecord::Base
 
   def self.search_by_title(query)
     return [] if query.blank?
-    where("title LIKE ?", "%#{query}%").order("created_at DESC")
+    where("title ILIKE ?", "%#{query}%").order("created_at DESC")
   end
 end
