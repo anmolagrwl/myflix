@@ -9,7 +9,7 @@
           %span Rating: 4.5/5.0
         %p= @video.description        
         .actions
-          =button_to '+ My Queue', { controller: "queue_items", action: "add_to_queue", video_id: @video.id, user_id: current_user.id }, method: :post, class: "btn btn-primary"
+          =button_to '+ My Queue', { controller: "queue_items", action: "add_to_queue", video_id: @video.id, user_id: current_user.id }, method: :post, class: "btn btn-primary" unless current_user.queued_video?(@video)
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
