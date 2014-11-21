@@ -24,9 +24,9 @@ describe VideosController do
     end
 
     context "for unauthenticated users" do
+      let(:video) { Fabricate(:video) }
       it_behaves_like "require_sign_in" do
-        video = Fabricate(:video)
-        let(:action) { get :show, id: video.id }
+        let(:action) { get :show, id: video.id}
       end
     end
   end

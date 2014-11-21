@@ -11,12 +11,14 @@ gem 'jquery-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap_form'
 gem 'pg'
+gem 'figaro'
 
 group :development do
   gem 'sqlite3'
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "letter_opener"
 end
 
 group :development, :test do

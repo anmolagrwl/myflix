@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :require_user, only: [:show]
   def new
     @user = User.new
   end
@@ -7,6 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
+      AppMailer.send_welcome_email(@user).deliver
       session[:user_id] = @user.id
       flash[:notice] = "You have successfully logged in!"
       redirect_to sign_in_path
@@ -27,6 +29,10 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 
   private
