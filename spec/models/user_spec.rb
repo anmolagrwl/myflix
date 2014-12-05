@@ -9,6 +9,10 @@ describe User do
   it { should have_many(:queue_items).order('position asc') }
   it { should have_many(:reviews).order('created_at desc') }
 
+  it_behaves_like "tokenable" do
+    let(:object) { Fabricate(:user) }
+  end
+
   describe "#queued_video?" do
     it "returns true if the video is in the users queue" do
       user = Fabricate(:user)

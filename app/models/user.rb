@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include Tokenable
   validates_presence_of :email, :full_name
   validates_uniqueness_of :email
   validates :password, presence: true, length: { minimum: 6 }, on: :create
@@ -29,13 +30,5 @@ class User < ActiveRecord::Base
 
   def can_follow?(another_user)
     !(self.follows?(another_user) || self == another_user)
-  end
-
-  def generate_token
-    self.update_attributes(token: SecureRandom.urlsafe_base64)
-  end
-
-  def nullify_token
-    self.update_attributes(token: nil)
   end
 end

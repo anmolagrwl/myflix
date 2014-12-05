@@ -15,7 +15,7 @@ class PasswordResetsController < ApplicationController
     user = User.where(token: params[:token]).first
     if user
       user.password = params[:password]
-      user.nullify_token
+      user.update_token
       user.save
       flash[:success] = "Successfully reset password!"
       redirect_to sign_in_path

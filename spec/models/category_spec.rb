@@ -4,6 +4,10 @@ describe Category do
   it { should have_many(:videos)}
   it { should validate_presence_of(:name)}
 
+  it_behaves_like "tokenable" do
+    let(:object) { Fabricate(:invitation) }
+  end
+
   describe "recent videos" do
     
     it "returns an empty array of videos if there are no videos in the category" do
