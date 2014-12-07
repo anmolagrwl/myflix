@@ -1,7 +1,13 @@
 Myflix::Application.routes.draw do
+  # Sidekiq
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
+  # Pages
   root to: "pages#front"
   get "home", to: "videos#index"
 
+  # Videos
   resources :videos, only: [:index, :show] do
     collection do
       get :search, to: "videos#search"
@@ -9,7 +15,10 @@ Myflix::Application.routes.draw do
     resources :reviews, only: [:create]
   end
 
+  # Sessions
   resources :sessions, only: [:create]
+  
+  # Categories
   resources :categories, only: [:show]
   
   # Queue
