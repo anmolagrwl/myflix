@@ -14,7 +14,7 @@ dexter = Video.create(title: 'Dexter', description: 'A Miami police forensics ex
 VideoCategory.create(video_id: 1, category_id: 2)
 VideoCategory.create(video_id: 2, category_id: 2)
 VideoCategory.create(video_id: 3, category_id: 1)
-user = User.create(full_name: "Corey Condardo", password: "password", email: "corey@corey.codes")
+# user = User.create(full_name: "Corey Condardo", password: "password", email: "corey@corey.codes")
 Review.create(user: user, video: dexter, rating: 5, description: "Best. Show. Ever.")
 Review.create(user: user, video: dexter, rating: 2, description: "Worst. Show. Ever.")
 QueueItem.create(user_id: 1, video_id: 1, position: 1)
