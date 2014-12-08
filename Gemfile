@@ -22,13 +22,13 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
-  gem "letter_opener"
 end
 
 group :development, :test do
   gem 'rspec-rails', '2.99'
   gem 'pry'
   gem 'pry-nav'
+  gem "letter_opener"
 end
 
 group :test do

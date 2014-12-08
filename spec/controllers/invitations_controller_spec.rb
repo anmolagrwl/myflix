@@ -20,7 +20,7 @@ describe InvitationsController do
 
     context "with valid inputs" do
       
-      after { ActionMailer::Base.deliveries.clear }
+      before { ActionMailer::Base.deliveries = [] }
 
       it "create an invitation" do
         set_current_user
@@ -30,7 +30,7 @@ describe InvitationsController do
       it "sends an email to recipient" do
         set_current_user
         post :create, invitation: { recipient_name: "John Doe", recipient_email: "joe@example.com", message: "Bro, this is a dope site!" }
-        expect(ActionMailer::Base.deliveries.last.to).to eq(['joe@example.com'])
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
       end
       it "redirects to the invitation new page" do
         set_current_user
@@ -45,7 +45,8 @@ describe InvitationsController do
     end
     
     context "with invalid inputs" do
-       before { ActionMailer::Base.deliveries = [] }
+
+      before { ActionMailer::Base.deliveries = [] }
 
       it "renders the new template" do
         set_current_user
