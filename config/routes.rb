@@ -1,4 +1,9 @@
 Myflix::Application.routes.draw do
+  
+  namespace :admin do
+    resources :videos, only: [:index, :show, :new, :create]
+  end
+
   # Sidekiq
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
