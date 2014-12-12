@@ -16,6 +16,9 @@ gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unicorn'
 gem "sentry-raven" #, :git => "https://github.com/getsentry/raven-ruby.git"
 gem 'paratrooper'
+gem 'carrierwave'
+gem 'mini_magick'
+gem "fog"
 
 group :development do
   gem 'sqlite3'

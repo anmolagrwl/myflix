@@ -12,11 +12,11 @@
             .form-group
               =f.text_field :title
             .form-group
-              =f.select :categories, Category.all.flat_map{|category| [[category.name, category.id]]}
+              =f.select :category_ids, Category.all.flat_map{|category| [[category.name, category.id]]}
             .form-group
               =f.text_area :description, rows: 8, class: "span6"
-            / .form-group
-            /   =f.file_field :large_cover, class: "form-control col-sm-3"
-            / .form-group
-            /   =f.file_field :small_cover, class: "form-control col-sm-3"
+            .form-group
+              =f.file_field :large_cover, class: "form-control col-sm-3"
+            .form-group
+              =f.file_field :small_cover, class: "form-control col-sm-3"
             =f.submit "Add Video"
