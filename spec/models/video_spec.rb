@@ -9,13 +9,13 @@ describe Video do
   describe "search_by_title" do
     it "returns an empty array if no videos title contain the search query" do
       happy_gilmore = Video.create(title: 'Happy Gilmore', description: 'A rejected hockey player puts his skills to the golf course to save his grandmother\'s house.')
-      haunted_house = Video.create(title: 'Haunted House', description: 'A terrifying movie.')
+      haunted_house = Video.create(title: 'Haunted House', description: 'Scary place.')
       expect(Video.search_by_title("Not The Title")).to eq([])
     end
 
     it "returns an array of one video if a videos title is an exact match of the search query" do
       happy_gilmore = Video.create(title: 'Happy Gilmore', description: 'A rejected hockey player puts his skills to the golf course to save his grandmother\'s house.')
-      haunted_house = Video.create(title: 'Haunted House', description: 'A terrifying movie.')
+      haunted_house = Video.create(title: 'Haunted House', description: 'Scary place.')
       expect(Video.search_by_title("Happy Gilmore")).to eq([happy_gilmore])
     end
     

@@ -8,7 +8,6 @@
               %a(href="/ui/admin_views_payments") Recent Payments
             %li.active
               %a(href="") Add a New Video
-          %fieldset
             .form-group
               =f.text_field :title
             .form-group
@@ -19,4 +18,7 @@
               =f.file_field :large_cover, class: "form-control col-sm-3"
             .form-group
               =f.file_field :small_cover, class: "form-control col-sm-3"
-            =f.submit "Add Video"
+            .form-group
+              =f.url_field :url, label: "Video S3 URL"
+            .form-group
+              =f.submit "Add Video"
