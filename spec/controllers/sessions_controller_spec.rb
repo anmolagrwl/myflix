@@ -26,7 +26,7 @@ describe SessionsController do
       end
       
       it "should flash a notice" do
-        expect(flash[:notice]).not_to be_blank
+        expect(flash[:success]).not_to be_blank
       end
       
       it "should redirect to home path" do
@@ -43,7 +43,7 @@ describe SessionsController do
         expect(session[:user_id]).to be_blank
       end
       it "should flash a error notice" do
-        expect(flash[:notice]).not_to be_blank
+        expect(flash[:danger]).to be
       end
       it "should redirect to sign in path" do
         expect(response).to redirect_to sign_in_path
@@ -60,10 +60,10 @@ describe SessionsController do
       expect(session[:user_id]).to be_blank
     end
     it "should flash a notice" do
-      expect(flash[:notice]).not_to be_blank
+      expect(flash[:success]).not_to be_blank
     end
     it "should redirect to homepage" do
-      expect(response).to redirect_to home_path
+      expect(response).to redirect_to root_path
     end
   end
 end

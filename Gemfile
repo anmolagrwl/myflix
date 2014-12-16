@@ -14,8 +14,11 @@ gem 'figaro'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unicorn'
-gem "sentry-raven" #, :git => "https://github.com/getsentry/raven-ruby.git"
 gem 'paratrooper'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+gem 'stripe'
 
 group :development do
   gem 'sqlite3'
@@ -42,5 +45,6 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'sentry-raven' #, :git => "https://github.com/getsentry/raven-ruby.git"
 end
 

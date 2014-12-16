@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       handle_invitation
       AppMailer.send_welcome_email(@user).deliver
       session[:user_id] = @user.id
-      flash[:notice] = "You have successfully logged in!"
+      flash[:success] = "You have successfully logged in!"
       redirect_to sign_in_path
     else
       render :new
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user.update(user_params)
 
     if @user.save
-      flash[:notice] = "User updated."
+      flash[:success] = "User updated."
       redirect_to user_path
     else
       render :edit
