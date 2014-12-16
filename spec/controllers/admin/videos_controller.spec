@@ -34,24 +34,20 @@ describe Admin::VideosController do
     end
 
     context "with valid input" do
-      it "creates the video" do
+      before(:each) do
         set_admin
         category = Fabricate(:category)
         category2 = Fabricate(:category)
+      end
+      it "creates the video" do
         post :create, video: { title: "Monk", description: "good show", category_ids: [category.id, category2.id] }
         expect(category.videos.count).to eq(1)
       end
       it "redirects to the add new video page" do
-        set_admin
-        category = Fabricate(:category)
-        category2 = Fabricate(:category)
         post :create, video: { title: "Monk", description: "good show", category_ids: [category.id, category2.id]  }
         expect(response).to redirect_to new_admin_video_path
       end
       it "sets the flash success message" do
-        set_admin
-        category = Fabricate(:category)
-        category2 = Fabricate(:category)
         post :create, video: { title: "Monk", description: "good show", category_ids: [category.id, category2.id]  }
         expect(flash[:success]).to be
       end
