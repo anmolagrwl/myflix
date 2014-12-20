@@ -41,6 +41,8 @@ group :test do
   gem 'faker'
   gem 'capybara'
   gem 'capybara-email'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :production do

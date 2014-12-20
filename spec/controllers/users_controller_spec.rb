@@ -12,6 +12,15 @@ describe UsersController do
   describe "POST create" do
     context "with good input" do
       before do
+        StripeWrapper.set_api_key
+        token = Stripe::Token.create(
+          :card => {
+            :number => "4242424242424242",
+            :exp_month => 12,
+            :exp_year => 2018,
+            :cvc => "314"
+          },
+        ).id
         post :create, user: Fabricate.attributes_for(:user)
       end
 
