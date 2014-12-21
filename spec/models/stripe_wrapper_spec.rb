@@ -2,9 +2,6 @@ require 'spec_helper'
 
 describe StripeWrapper do
   describe StripeWrapper::Charge do
-    before do
-      StripeWrapper.set_api_key
-    end
     let(:token) do
       Stripe::Token.create(
         :card => {
