@@ -15,14 +15,15 @@ describe UsersController do
       
       before do
         StripeWrapper::Charge.should_receive(:create).and_return(charge)
-        post :create, user: Fabricate.attributes_for(:user)
       end
 
       it "creates a user" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(User.count).to eq(1)
       end
 
       it "redirects to sign in path" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to sign_in_path
       end
 
@@ -69,26 +70,32 @@ describe UsersController do
       end
     end
 
-    context "invalid personal info" do
-      before do
-        post :create, user: { email: "test@test.com" }
-      end
-      
+    context "invalid personal info" do      
       it "doesn't create a user" do
+        post :create, user: { email: "test@test.com" }
         expect(User.count).to eq(0)
       end
 
       it "renders new template" do
+        post :create, user: { email: "test@test.com" }
         expect(response).to render_template :new
       end
 
       it "sets @user" do
+        post :create, user: { email: "test@test.com" }
         expect(assigns(:user)).to be_instance_of(User)
       end
 
       it "does not charge the card" do
         StripeWrapper::Charge.should_not_receive(:create)
         post :create, user: { email: "corey@test.com" }
+      end
+
+      it "does not send out email with invalid inputs" do
+        ActionMailer::Base.deliveries = []
+        StripeWrapper::Charge.should_not_receive(:create)
+        post :create, user: { email: "test@test.com" }
+        expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
 
@@ -108,11 +115,6 @@ describe UsersController do
         post :create, user: { email: "test@test.com", password: "password", full_name: "Testy Testerson" }
         expect(ActionMailer::Base.deliveries.last.body).to include("Testy Testerson")
       end
-      it "does not send out email with invalid inputs" do
-        post :create, user: { email: "test@test.com" }
-        expect(ActionMailer::Base.deliveries).to be_empty
-      end
-
     end
   end
 
