@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "admin creates video" do
-  scenario "as a valid admin" do
+  scenario "as a valid admin", :vcr do
     wilson = Fabricate(:user, admin: true)
     sign_in(wilson)
     visit (new_admin_video_path)

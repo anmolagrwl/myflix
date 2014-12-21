@@ -10,17 +10,11 @@ describe UsersController do
   end
 
   describe "POST create" do
-    context "with good input" do
+    context "valid personal info and valid card" do
+      let(:charge) { double(:charge, successful?: true) }
+      
       before do
-        StripeWrapper.set_api_key
-        token = Stripe::Token.create(
-          :card => {
-            :number => "4242424242424242",
-            :exp_month => 12,
-            :exp_year => 2018,
-            :cvc => "314"
-          },
-        ).id
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
         post :create, user: Fabricate.attributes_for(:user)
       end
 
@@ -54,7 +48,28 @@ describe UsersController do
       end
     end
 
-    context "with bad input" do
+    context "valid personal info and declined card" do
+      it "does not create a new user record" do
+        charge = double(:charge, successful?: false, error_message: "Your card was declined")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: "123123"
+        expect(User.count).to eq(0)
+      end
+      it "renders the new template" do
+        charge = double(:charge, successful?: false, error_message: "Your card was declined.")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: "123123"
+        expect(response).to render_template :new
+      end
+      it "sets the flash error message" do
+        charge = double(:charge, successful?: false, error_message: "Your card was declined")
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+        post :create, user: Fabricate.attributes_for(:user), stripeToken: "123123"
+        expect(flash[:danger]).to be
+      end
+    end
+
+    context "invalid personal info" do
       before do
         post :create, user: { email: "test@test.com" }
       end
@@ -70,11 +85,20 @@ describe UsersController do
       it "sets @user" do
         expect(assigns(:user)).to be_instance_of(User)
       end
+
+      it "does not charge the card" do
+        StripeWrapper::Charge.should_not_receive(:create)
+        post :create, user: { email: "corey@test.com" }
+      end
     end
 
     context "sending email" do
       # after { ActionMailer::Base.deliveries.clear } 
-      before { ActionMailer::Base.deliveries = [] } 
+      before(:each) do
+        ActionMailer::Base.deliveries = []
+        charge = double(:charge, successful?: true)
+        StripeWrapper::Charge.should_receive(:create).and_return(charge)
+      end 
       
       it "sends the email to the user with valid inputs" do
         post :create, user: { email: "test@test.com", password: "password", full_name: "Testy Testerson" }
