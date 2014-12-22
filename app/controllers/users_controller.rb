@@ -21,8 +21,8 @@ class UsersController < ApplicationController
         session[:user_id] = @user.id
         flash[:success] = "You have successfully created an account and started your payment. Woohoo!"
       else
-        render :new
         flash[:danger] = charge.error_message
+        render :new        
       end
     else
       render :new
