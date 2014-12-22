@@ -12,4 +12,8 @@ class Video < ActiveRecord::Base
     return [] if query.blank?
     where("title ILIKE ?", "%#{query}%").order("created_at DESC")
   end
+
+  def rating
+    reviews.any? ? reviews.first.rating : nil
+  end
 end
