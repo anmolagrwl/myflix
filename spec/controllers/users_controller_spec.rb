@@ -101,7 +101,7 @@ describe UsersController do
 
     context "sending email" do
       # after { ActionMailer::Base.deliveries.clear } 
-      before(:each) do
+      before do
         ActionMailer::Base.deliveries = []
         charge = double(:charge, successful?: true)
         StripeWrapper::Charge.should_receive(:create).and_return(charge)
