@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_user, only: [:show]
+  
   def new
     @user = User.new
   end
@@ -7,28 +8,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.valid?
-      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-      charge = StripeWrapper::Charge.create(
-        :amount => 999,
-        :card => params[:stripeToken],
-        :description => "Payment for #{@user.email}"
-      )
-      if charge.successful?
-        if @user.save
-          handle_invitation   
-          AppMailer.send_welcome_email(@user).deliver        
-          redirect_to sign_in_path
-          session[:user_id] = @user.id
-          flash[:success] = "You have successfully created an account and started your payment. Woohoo!"
-        else
-          flash[:danger] = @user.errors.full_messages
-          render :new
-        end
+      result = UserSignup.new(@user).sign_up(params[:stripeToken], params[:invitation_token])
+      if result.successful?
+        flash[:success] = "You have successfully created an account and started your payment. Woohoo!"
+        redirect_to sign_in_path
+        session[:user_id] = @user.id
       else
-        flash[:danger] = charge.error_message
-        render :new        
+        flash[:danger] = result.error_message
+        render :new
       end
     else
+      flash[:danger] = @user.errors.full_messages
       render :new
     end
   end
@@ -70,14 +60,5 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(params[:id])
-  end
-
-  def handle_invitation
-    if params[:invitation_token].present?
-      invitation = Invitation.where(token: params[:invitation_token]).first
-      @user.follow(invitation.inviter)
-      invitation.inviter.follow(@user)
-      invitation.update_column(:token, nil)
-    end
   end
 end
