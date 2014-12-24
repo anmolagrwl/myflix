@@ -1,0 +1,97 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://coreycodes-myflix-development.s3.amazonaws.com/uploads/large_cover.jpg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.25.0
+      Content-Type:
+      - image/jpeg
+      X-Amz-Acl:
+      - public-read
+      X-Amz-Content-Sha256:
+      - STREAMING-AWS4-HMAC-SHA256-PAYLOAD
+      X-Amz-Decoded-Content-Length:
+      - '100909'
+      Content-Encoding:
+      - aws-chunked
+      X-Amz-Date:
+      - 20141221T051431Z
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAI6NP2NDFSLSAL77A/20141221/us-east-1/s3/aws4_request,
+        SignedHeaders=content-encoding;content-type;host;x-amz-acl;x-amz-content-sha256;x-amz-date;x-amz-decoded-content-length,
+        Signature=6e2ad9b6560e76333c32bbbc0e28ebb1226caa9b8461b209689c0835abc1929c
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Amz-Id-2:
+      - 39MdDHP9le++BaQrgVuZbeqo9j3CtYLUydlmcaWha5/pRiL/n4QWKoBLj7nwV7DIsVrj7QbjoNw=
+      X-Amz-Request-Id:
+      - 3187EA23625EC59B
+      Date:
+      - Sun, 21 Dec 2014 05:14:32 GMT
+      Etag:
+      - '"22e08af9df264e22cb29647c8c54d908"'
+      Content-Length:
+      - '0'
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sun, 21 Dec 2014 05:14:31 GMT
+- request:
+    method: put
+    uri: https://coreycodes-myflix-development.s3.amazonaws.com/uploads/small_cover.jpg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.25.0
+      Content-Type:
+      - image/jpeg
+      X-Amz-Acl:
+      - public-read
+      X-Amz-Content-Sha256:
+      - STREAMING-AWS4-HMAC-SHA256-PAYLOAD
+      X-Amz-Decoded-Content-Length:
+      - '18766'
+      Content-Encoding:
+      - aws-chunked
+      X-Amz-Date:
+      - 20141221T051431Z
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAI6NP2NDFSLSAL77A/20141221/us-east-1/s3/aws4_request,
+        SignedHeaders=content-encoding;content-type;host;x-amz-acl;x-amz-content-sha256;x-amz-date;x-amz-decoded-content-length,
+        Signature=adb9af66234c0779c81564055f238426b53cc90d02d87f7658f017d27e050114
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      X-Amz-Id-2:
+      - rYoNr78gxof9QKpV/x39Xf62SxSWQbJOUUXhHJrSd5f50LzgUnkAPDRFMBXRIfsvLyTQB5Jsx/w=
+      X-Amz-Request-Id:
+      - 5171EB3034CC948A
+      Date:
+      - Sun, 21 Dec 2014 05:14:32 GMT
+      Etag:
+      - '"067b79b273cd2468d99bfed61eaa33f9"'
+      Content-Length:
+      - '0'
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sun, 21 Dec 2014 05:14:31 GMT
+recorded_with: VCR 2.9.3

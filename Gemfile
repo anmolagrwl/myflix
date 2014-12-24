@@ -19,6 +19,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
 gem 'stripe'
+gem 'draper'
 
 group :development do
   gem 'sqlite3'
@@ -35,12 +36,15 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner', '1.2.0'
+  gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'fabrication'
   gem 'faker'
   gem 'capybara'
   gem 'capybara-email'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
 end
 
 group :production do
