@@ -14,12 +14,16 @@ class UsersController < ApplicationController
         :description => "Payment for #{@user.email}"
       )
       if charge.successful?
-        @user.save()
-        handle_invitation   
-        AppMailer.send_welcome_email(@user).deliver        
-        redirect_to sign_in_path
-        session[:user_id] = @user.id
-        flash[:success] = "You have successfully created an account and started your payment. Woohoo!"
+        if @user.save
+          handle_invitation   
+          AppMailer.send_welcome_email(@user).deliver        
+          redirect_to sign_in_path
+          session[:user_id] = @user.id
+          flash[:success] = "You have successfully created an account and started your payment. Woohoo!"
+        else
+          flash[:danger] = @user.errors.full_messages
+          render :new
+        end
       else
         flash[:danger] = charge.error_message
         render :new        
