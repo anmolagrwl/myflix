@@ -15,16 +15,13 @@ class UserSignup
       if charge.successful?
         process_user_creation(@user, invitation_token)     
         @status = :success
-        self
       else
         @status = :failed
         @error_message = charge.error_message
-        self
       end
     else
       @status = :failed
       @error_message = @user.errors.full_messages
-      self
     end
   end
 
