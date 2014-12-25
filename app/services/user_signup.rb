@@ -11,13 +11,13 @@ class UserSignup
   
   def sign_up(stripe_token, invitation_token)
     if @user.valid?
-      charge = attempt_charge(stripe_token, @user)
-      if charge.successful?
+      customer = attempt_create_customer(stripe_token, @user)
+      if customer.successful?
         process_user_creation(@user, invitation_token)     
         @status = :success
       else
         @status = :failed
-        @error_message = charge.error_message
+        @error_message = customer.error_message
       end
     else
       @status = :failed
@@ -44,12 +44,11 @@ class UserSignup
     AppMailer.send_welcome_email(user).deliver       
   end
 
-  def attempt_charge(stripe_token, user)
+  def attempt_create_customer(stripe_token, user)
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-    StripeWrapper::Charge.create(
-      :amount => 999,
-      :card => stripe_token,
-      :description => "Payment for #{user.email}"
+    StripeWrapper::Customer.create(
+      :user => user,
+      :card => stripe_token
     )
   end
 end

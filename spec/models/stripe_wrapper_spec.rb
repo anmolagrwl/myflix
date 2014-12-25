@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe StripeWrapper do
-  describe StripeWrapper::Charge do
-    let(:token) do
+  let(:token) do
       Stripe::Token.create(
         :card => {
           :number => card_number,
@@ -11,8 +10,8 @@ describe StripeWrapper do
           :cvc => "314"
         },
       ).id
-    end
-
+  end
+  describe StripeWrapper::Charge do
     context "with valid card" do
       let(:card_number) { "4242424242424242" }
 
@@ -56,5 +55,44 @@ describe StripeWrapper do
         response.error_message.should == "Your card was declined."
       end
     end     
-  end  
+  end
+
+  describe StripeWrapper::Customer do
+    describe ".create" do
+      context "with a valid card" do
+        let(:card_number) { "4242424242424242" }
+        
+        it "creates a customer", :vcr do
+          alice = Fabricate(:user)
+          response = StripeWrapper::Customer.create(
+            user: alice,
+            card: token
+          )
+          expect(response).to be_successful
+        end
+      end
+      
+      context "with an invalid card", :vcr do
+        let(:card_number) { "4000000000000002" }
+        
+        it "does not create a customer" do
+          alice = Fabricate(:user)
+          response = StripeWrapper::Customer.create(
+            user: alice,
+            card: token
+          )
+          expect(response).to_not be_successful
+        end
+
+        it "returns the error message" do
+          alice = Fabricate(:user)
+          response = StripeWrapper::Customer.create(
+            user: alice,
+            card: token
+          )
+          expect(response.error_message).to eq("Your card was declined.")
+        end
+      end
+    end
+  end
 end
