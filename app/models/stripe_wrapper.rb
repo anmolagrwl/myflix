@@ -31,12 +31,11 @@ module StripeWrapper
   end
 
   class Customer
-    attr_reader :response, :error_message, :status
+    attr_reader :response, :error_message
 
     def initialize(options={})
       @response = options[:response]
       @error_message = options[:error_message]
-      @status = nil
     end
 
     def self.create(options={})
@@ -53,7 +52,7 @@ module StripeWrapper
     end
 
     def successful?
-      status == :success
+      response.present?
     end
   end
 end

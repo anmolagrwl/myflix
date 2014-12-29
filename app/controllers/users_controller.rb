@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.valid?
-      result = UserSignup.new(@user).sign_up(params[:stripeToken], @user)
+      result = UserSignup.new(@user).sign_up(params[:stripeToken], params[:invitation_token])
       if result.successful?
         flash[:success] = "You have successfully created an account and started your payment. Woohoo!"
         redirect_to sign_in_path

@@ -2,6 +2,7 @@ class UserSignup
   
   attr_reader :error_message
   attr_reader :user
+  attr_accessor :status
 
   def initialize(user)
     @user = user
@@ -12,12 +13,14 @@ class UserSignup
   def sign_up(stripe_token, invitation_token)
     if @user.valid?
       customer = attempt_create_customer(stripe_token, @user)
+      @status = :success
       if customer.successful?
-        process_user_creation(@user, invitation_token)     
-        @status = :success
+        process_user_creation(@user, invitation_token)
+        return self
       else
         @status = :failed
         @error_message = customer.error_message
+        return self
       end
     else
       @status = :failed
