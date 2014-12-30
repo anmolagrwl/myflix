@@ -2,11 +2,15 @@ Myflix::Application.routes.draw do
   
   namespace :admin do
     resources :videos, only: [:index, :show, :new, :create]
+    resources :payments, only: [:index]
   end
 
   # Sidekiq
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
+  # Stripe Webhook
+  mount StripeEvent::Engine, at: '/stripe_events' # provide a custom path
 
   # Pages
   root to: "pages#front"

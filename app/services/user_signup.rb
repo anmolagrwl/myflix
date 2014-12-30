@@ -15,6 +15,7 @@ class UserSignup
       customer = attempt_create_customer(stripe_token, @user)
       @status = :success
       if customer.successful?
+        @user.customer_token = customer.customer_token
         process_user_creation(@user, invitation_token)
         return self
       else
